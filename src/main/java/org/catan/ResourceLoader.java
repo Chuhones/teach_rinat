@@ -12,24 +12,25 @@ import javax.imageio.ImageIO;
  *
  * @author Artyukov
  */
-public class ResourceLoader 
+public class ResourceLoader
 {
     public static Map<String, Image> tiles = new HashMap<>();
-    
+
     public static void reloadTextures()
     {
-        File directory = new File("src\\main\\resources\\pics");
+        //File directory = new File("src\\main\\resources\\pics");
+        File directory = new File("src/main/resources/pics");
         if(directory.isDirectory())
         {
             File[] files = directory.listFiles();
-            
+
             for(File imageFile : files)
             {
                 if(imageFile.isDirectory())
                 {
                     continue;
                 }
-                
+
                 if(imageFile.getName().endsWith(".png"))
                 {
                     addTile(imageFile);
@@ -37,12 +38,12 @@ public class ResourceLoader
             }
         }
     }
-    
+
     public static Image getTile(String tileName)
     {
         return tiles.get(tileName);
     }
-    
+
     private static void addTile(File imageFile)
     {
         String key = imageFile.getName();

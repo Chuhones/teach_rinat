@@ -10,7 +10,7 @@ import org.catan.components.Player;
  *
  * @author Artyukov
  */
-public class Game 
+public class Game
 {
     private static Game instance = null;
     String gameName;
@@ -31,7 +31,7 @@ public class Game
         }
         return instance;
     }
-    
+
     public void setMap(AbstractMap map)
     {
         this.map = map;
@@ -46,5 +46,15 @@ public class Game
     {
         return map;
     }
-    
+
+    public List<Player> getPlayers()
+    {
+        return players;
+    }
+
+    public void addPlayer(Player player)
+    {
+        players.add(player);
+    }
+
 }

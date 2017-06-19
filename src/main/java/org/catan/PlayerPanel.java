@@ -13,13 +13,28 @@ import org.catan.components.Player;
 public class PlayerPanel extends JPanel
 {
     PlayerPanelBackground background;
+    PlayerPanelRaws raws;
     private Player player = null;
 
     public PlayerPanel()
     {
         background = new PlayerPanelBackground();
-        add(background);
+        raws = new PlayerPanelRaws(this);
+    }
+
+    @Override
+    public void setVisible(boolean aFlag)
+    {
+        System.out.println("Player Panel bounds: "+getX()+"   "+getY()+"   "+getWidth()+"   "+getHeight());
+        add(background,0);
+        add(raws,1);
+
+        super.setVisible(aFlag);
+        
         background.setVisible(true);
+        raws.setVisible(true);
+
+
     }
 
     /**
@@ -41,30 +56,39 @@ public class PlayerPanel extends JPanel
             fillPanels();
         }
     }
-    
+
     protected void fillPanels()
     {
         Rectangle bound = getBounds();
-        background.init((int)bound.getMinX()+20, 
-                        (int)bound.getMinY()+20, 
-                        (int)bound.getWidth()-40, 
-                        (int)bound.getHeight()-40);
+        background.init((int)bound.getMinX(),
+                        (int)bound.getMinY(),
+                        (int)bound.getWidth(),
+                        (int)bound.getHeight());
+
+//        raws.init((int)bound.getMinX()+30,
+//                  (int)(bound.getMinY() + bound.getHeight()/2 - 60),
+//                  (int)bound.getWidth()-60,
+//                  (int)bound.getHeight()/2);
+
     }
 
     @Override
     public void paint(Graphics g)
     {
-        super.paint(g); 
+        super.paint(g);
         paintPlayerPanel(g);
+
+        g.dispose();
     }
-    
+
     public void paintPlayerPanel(Graphics g)
     {
         Graphics2D graphics = (Graphics2D)g;
-        background.paint(g);               
-        
-        graphics.dispose();
+        graphics.setPaintMode();
+
+        background.manPaint(graphics);
+        //raws.manPaint(graphics);
     }
-    
-    
+
+
 }
