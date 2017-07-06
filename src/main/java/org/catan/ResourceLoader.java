@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -47,16 +48,19 @@ public class ResourceLoader
     private static void addTile(File imageFile)
     {
         String key = imageFile.getName();
-        try
-        {
-            BufferedImage image = ImageIO.read(imageFile);
+//        try
+//        {
+            ImageIcon icon = new ImageIcon(imageFile.getPath());
+            //BufferedImage image = ImageIO.read(imageFile);
+
+            Image image = icon.getImage();
             tiles.put(key, image);
             System.out.println("Loaded image '"+key+"'");
-        }
-        catch(IOException ioe)
-        {
-            System.out.println("Error on load image "+key+"   "+imageFile.getPath()+": \n"
-                    +ioe.getLocalizedMessage());
-        }
+//        }
+//        catch(IOException ioe)
+//        {
+//            System.out.println("Error on load image "+key+"   "+imageFile.getPath()+": \n"
+//                    +ioe.getLocalizedMessage());
+//        }
     }
 }

@@ -12,6 +12,7 @@ package org.catan;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.List;
 import javax.swing.JPanel;
 import org.catan.components.Player;
@@ -48,10 +49,10 @@ public class PlayerPanelRaws extends JPanel
 
     public void manPaint(Graphics g)
     {
-        super.paint(g);
+        //super.paint(g);
         paintRaws((Graphics2D)g);
 
-        g.dispose();
+        //g.dispose();
     }
 
     private void paintRaws(Graphics2D graph)
@@ -82,6 +83,9 @@ public class PlayerPanelRaws extends JPanel
         }
 
         int num = 0;
+
+        Rectangle bds = getBounds();
+        System.out.println("Player RAW bounds2: "+bds.x+"   "+bds.y+"   "+bds.width+"   "+bds.height);
         for(Raw raw : raws)
         {
             graph.drawImage(raw.getTile(), left + num * oneCardWidth, up, cardWidth, height, this);

@@ -56,6 +56,9 @@ public final class PlayerPanelBackground extends JPanel
     @Override
     public void paint(Graphics g)
     {
+        super.paint(g);
+        paintOrnament(g);
+        g.dispose();
     }
 
     public void manPaint(Graphics g)
@@ -71,10 +74,10 @@ public final class PlayerPanelBackground extends JPanel
         Graphics2D graphics = (Graphics2D)graph;
         graphics.setPaintMode();
 
-        graphics.drawImage(angleTileLeftUp,    getX(),                      getY(),                     15, 15, this);
-        graphics.drawImage(angleTileRightUp,   getX() + getWidth() - 15,    getY(),                     15, 15, this);
-        graphics.drawImage(angleTileRightDown, getX() + getWidth() - 15,    getY() + getHeight() - 15,  15, 15, this);
-        graphics.drawImage(angleTileLeftDown,  getX(),                      getY() + getHeight() - 15,  15, 15, this);
+        graphics.drawImage(angleTileLeftUp,    getX(),                      getY(),                     30, 30, this);
+        graphics.drawImage(angleTileRightUp,   getX() + getWidth() - 30,    getY(),                     30, 30, this);
+        graphics.drawImage(angleTileRightDown, getX() + getWidth() - 30,    getY() + getHeight() - 30,  30, 30, this);
+        graphics.drawImage(angleTileLeftDown,  getX(),                      getY() + getHeight() - 30,  30, 30, this);
 
         graphics.drawImage(lineTileLeft,    getX(),                   getY() + 30,                  30,                 getHeight() - 60, this);
         graphics.drawImage(lineTileRight,   getX() + getWidth() - 30, getY() + 30,                  30,                 getHeight() - 60, this);

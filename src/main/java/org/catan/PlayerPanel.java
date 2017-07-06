@@ -18,7 +18,7 @@ public class PlayerPanel extends JPanel
 
     public PlayerPanel()
     {
-        background = new PlayerPanelBackground();
+        //background = new PlayerPanelBackground();
         raws = new PlayerPanelRaws(this);
     }
 
@@ -26,12 +26,12 @@ public class PlayerPanel extends JPanel
     public void setVisible(boolean aFlag)
     {
         System.out.println("Player Panel bounds: "+getX()+"   "+getY()+"   "+getWidth()+"   "+getHeight());
-        add(background,0);
-        add(raws,1);
+        //add(background,0);
+        add(raws,0);
 
         super.setVisible(aFlag);
-        
-        background.setVisible(true);
+
+        //background.setVisible(true);
         raws.setVisible(true);
 
 
@@ -60,15 +60,15 @@ public class PlayerPanel extends JPanel
     protected void fillPanels()
     {
         Rectangle bound = getBounds();
-        background.init((int)bound.getMinX(),
-                        (int)bound.getMinY(),
-                        (int)bound.getWidth(),
-                        (int)bound.getHeight());
+//        background.init((int)bound.getMinX(),
+//                        (int)bound.getMinY(),
+//                        (int)bound.getWidth(),
+//                        (int)bound.getHeight());
 
-//        raws.init((int)bound.getMinX()+30,
-//                  (int)(bound.getMinY() + bound.getHeight()/2 - 60),
-//                  (int)bound.getWidth()-60,
-//                  (int)bound.getHeight()/2);
+        raws.init((int)bound.getMinX()+30,
+                  (int)(bound.getMinY() + bound.getHeight()/2 - 60),
+                  (int)bound.getWidth()-60,
+                  (int)bound.getHeight()/2);
 
     }
 
@@ -86,8 +86,8 @@ public class PlayerPanel extends JPanel
         Graphics2D graphics = (Graphics2D)g;
         graphics.setPaintMode();
 
-        background.manPaint(graphics);
-        //raws.manPaint(graphics);
+        //background.manPaint(graphics);
+        raws.manPaint(graphics);
     }
 
 
