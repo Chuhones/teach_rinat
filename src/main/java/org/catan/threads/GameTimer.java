@@ -11,7 +11,7 @@ package org.catan.threads;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import org.catan.GlobalVariables;
+import org.catan.core.GlobalVariables;
 
 /**
  *

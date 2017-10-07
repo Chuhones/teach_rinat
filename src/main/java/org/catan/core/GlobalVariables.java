@@ -7,7 +7,7 @@
  * Created Jun 19, 2017
  */
 
-package org.catan;
+package org.catan.core;
 
 import java.util.concurrent.atomic.AtomicLong;
 

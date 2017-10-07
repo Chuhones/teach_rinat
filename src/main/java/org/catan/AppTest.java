@@ -1,8 +1,9 @@
 package org.catan;
 
+import org.catan.core.ResourceLoaderCatan;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
-import java.awt.Color;
+import org.newdawn.slick.Color;
 import java.awt.Toolkit;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,11 +36,11 @@ public class AppTest extends JFrame implements Runnable
     {
         GameTimer.init();
 
-        ResourceLoader.reloadTextures();
+        ResourceLoaderCatan.reloadTexturesSlick();
 
         Game game = Game.getGame();
 
-        Player mainPlayer = new Player("Chuhones", Color.BLUE);
+        Player mainPlayer = new Player("Chuhones", Color.blue);
         mainPlayer.getRaws().add(new OreRaw());
         mainPlayer.getRaws().add(new GrainRaw());
 
@@ -47,7 +48,7 @@ public class AppTest extends JFrame implements Runnable
 
         AbstractMap gameMap = game.getMap();
 
-        fillCoordinates(gameMap);
+        /*fillCoordinates(gameMap);
 
         AppTest gameFrame = new AppTest();
         gameFrame.setLayout(null);
@@ -61,33 +62,30 @@ public class AppTest extends JFrame implements Runnable
 
         MapPanel mapPanel = new MapPanel();
         ExitButton exitButton = new ExitButton();
-
-
-        PlayerPanel bg1 = new PlayerPanel();
-
-
+      
+        
+        Player firstPlayer = new Player("Chuhones", Color.BLUE);
+        PlayerPanel pp = new PlayerPanel();
+                        
         gameFrame.add(mapPanel);
-        gameFrame.add(bg1);
         gameFrame.add(exitButton);
-
+        gameFrame.add(pp);
 
         gameFrame.setTitle(game.getGameName());
         gameFrame.pack();
 
         gameFrame.initMapPanel(mapPanel);
         gameFrame.initExitButton(exitButton);
-
-        bg1.setBounds(10, 10, gameFrame.getWidth()/4, gameFrame.getHeight()/4);
-        bg1.setPlayer(mainPlayer);
-
+        gameFrame.initPlayerPanel(pp);
+        
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //gameFrame.setLocationRelativeTo(null);
-
         gameFrame.setVisible(true);
 
         mapPanel.setVisible(true);
         exitButton.setVisible(true);
-        bg1.setVisible(true);
+        
+        pp.setPlayer(firstPlayer);
+        pp.setVisible(true);*/
 
         //gameFrame.run();
     }
@@ -117,19 +115,24 @@ public class AppTest extends JFrame implements Runnable
         }
     }
 
-    private void initMapPanel(MapPanel mapPanel)
+    /*private void initMapPanel(MapPanel mapPanel)
     {
         int xCenter = this.getWidth() / 2;
 
         mapPanel.setBackground(new Color(87, 104, 207, 254));
         mapPanel.setBounds(xCenter-350, 30, 700, 630);
-    }
+    }*/
 
     public void initExitButton(ExitButton exitButton)
     {
         exitButton.setBounds((this.getWidth() / 2) - 45, 0, 90, 20);
     }
 
+    public void initPlayerPanel(PlayerPanel playerPanel)
+    {
+        //playerPanel.setBounds(40, 40, 450, 150);
+    }
+   
     public static void fillCoordinates(AbstractMap map)
     {
         CrossLine[][] crosslines = map.getCrosslines();
@@ -156,8 +159,8 @@ public class AppTest extends JFrame implements Runnable
 
         Segment[][] segments = map.getSegments();
         int xDelta;
-        currentY = 0;
-        currentX = 0;
+        currentY = 55;
+        currentX = 50;
         for(int x=0; x<segments.length; x++)
         {
             for(int y=0; y<segments[x].length; y++)
@@ -178,9 +181,33 @@ public class AppTest extends JFrame implements Runnable
 
                 currentY+=85;
             }
-            currentY = 0;
+            currentY = 55;
             currentX+=100;
         }
+        
+//        for(int x=0; x<segments.length; x++)
+//        {
+//            for(int y=0; y<segments[x].length; y++)
+//            {
+//                if(y%2 == 0)
+//                {
+//                    xDelta = 50;
+//                }
+//                else
+//                {
+//                    xDelta = 0;
+//                }
+//                if(segments[x][y] != null)
+//                {
+//                    segments[x][y].setXCoord(currentX+xDelta);
+//                    segments[x][y].setYCoord(currentY+1);
+//                }
+//
+//                currentY+=85;
+//            }
+//            currentY = 0;
+//            currentX+=100;
+//        }
     }
 
     public void update()

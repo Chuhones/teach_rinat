@@ -1,6 +1,6 @@
 package org.catan.breakings;
 
-import java.awt.Image;
+import org.newdawn.slick.opengl.Texture;
 
 /**
  *
@@ -8,5 +8,7 @@ import java.awt.Image;
  */
 public abstract class Breaking 
 {
-    public abstract Image getTile();
+    protected Texture tile = null;
+    
+    public abstract Texture getTexture();
 }

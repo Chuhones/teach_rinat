@@ -1,17 +1,23 @@
 package org.catan;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import javax.swing.JPanel;
+import java.io.IOException;
+import org.catan.components.Player;
+import org.catan.core.Component;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.gui.GUIContext;
+import org.newdawn.slick.opengl.InternalTextureLoader;
+import org.newdawn.slick.opengl.Texture;
 
 /**
  *
  * @author Artyukov
  */
-public final class PlayerPanelBackground extends JPanel
+public final class PlayerPanelBackground extends Component
 {
+    protected Player player = null;
     public static final int DEFAULT_WIDTH = 450;
     public static final int DEFAULT_HEIGHT = 180;
 
@@ -24,65 +30,89 @@ public final class PlayerPanelBackground extends JPanel
     private final String lineTileUpName = "player_panel_line_u.png";
     private final String lineTileDownName = "player_panel_line_d.png";
 
-    private Image angleTileLeftDown = null;
-    private Image angleTileRightDown = null;
-    private Image angleTileLeftUp = null;
-    private Image angleTileRightUp = null;
-    private Image lineTileLeft = null;
-    private Image lineTileRight = null;
-    private Image lineTileUp = null;
-    private Image lineTileDown = null;
+    private Texture angleTileLeftDown = null;
+    private Texture angleTileRightDown = null;
+    private Texture angleTileLeftUp = null;
+    private Texture angleTileRightUp = null;
+    private Texture lineTileLeft = null;
+    private Texture lineTileRight = null;
+    private Texture lineTileUp = null;
+    private Texture lineTileDown = null;
 
-
-    public PlayerPanelBackground()
+    public PlayerPanelBackground(GUIContext container, int X, int Y, int width, int height)
     {
-        angleTileLeftDown = ResourceLoader.getTile(angleTileLeftDownName);
-        angleTileRightDown = ResourceLoader.getTile(angleTileRightDownName);
-        angleTileLeftUp = ResourceLoader.getTile(angleTileLeftUpName);
-        angleTileRightUp = ResourceLoader.getTile(angleTileRightUpName);
-        lineTileLeft = ResourceLoader.getTile(lineTileLeftName);
-        lineTileRight = ResourceLoader.getTile(lineTileRightName);
-        lineTileUp = ResourceLoader.getTile(lineTileUpName);
-        lineTileDown = ResourceLoader.getTile(lineTileDownName);
+        this(container);
+        setLocation(X, Y);
+        this.width = width;
+        this.height = height;
     }
-
-    public void init(int xCoord, int yCoord, int width, int height)
+    
+    private PlayerPanelBackground(GUIContext container)
     {
+        super(container);
+        try
+        {
+            InternalTextureLoader textureLoader = InternalTextureLoader.get();
+            angleTileLeftDown = textureLoader.getTexture(angleTileLeftDownName, false, 0);
+            angleTileRightDown = textureLoader.getTexture(angleTileRightDownName, false, 0);
+            angleTileLeftUp = textureLoader.getTexture(angleTileLeftUpName, false, 0);
+            angleTileRightUp = textureLoader.getTexture(angleTileRightUpName, false, 0);
+            lineTileLeft = textureLoader.getTexture(lineTileLeftName, false, 0);
+            lineTileRight = textureLoader.getTexture(lineTileRightName, false, 0);
+            lineTileUp = textureLoader.getTexture(lineTileUpName, false, 0);
+            lineTileDown = textureLoader.getTexture(lineTileDownName, false, 0);
+        }
+        catch(IOException ioe)
+        {
+            System.out.println("Cannot resolve textures ");
+        }
+    }
+    
+    public void init(int xCoord, int yCoord, int width, int height, Player player)
+    {
+        setPlayer(player);
         //setBackground(new Color(176, 120, 15));
-        setBounds(xCoord, yCoord, width, height);
-
+        //setBounds(xCoord, yCoord, width, height);
+        //setVisible(true);
     }
 
     @Override
-    public void paint(Graphics g)
+    public void render(GUIContext guic, Graphics grphcs) throws SlickException
     {
-        super.paint(g);
-        paintOrnament(g);
-        g.dispose();
-    }
-
-    public void manPaint(Graphics g)
-    {
-        super.paint(g);
-        paintOrnament(g);
-
-        g.dispose();
+        super.render(guic, grphcs);
+        paintOrnament(grphcs);
+        grphcs.flush();
     }
 
     public final void paintOrnament(Graphics graph)
     {
-        Graphics2D graphics = (Graphics2D)graph;
-        graphics.setPaintMode();
+        //graph.setPaintMode();
 
-        graphics.drawImage(angleTileLeftUp,    getX(),                      getY(),                     30, 30, this);
-        graphics.drawImage(angleTileRightUp,   getX() + getWidth() - 30,    getY(),                     30, 30, this);
-        graphics.drawImage(angleTileRightDown, getX() + getWidth() - 30,    getY() + getHeight() - 30,  30, 30, this);
-        graphics.drawImage(angleTileLeftDown,  getX(),                      getY() + getHeight() - 30,  30, 30, this);
+        graph.drawImage(new Image(angleTileLeftUp),    getX(),                      getY());//,                     30, 30, this);
+        graph.drawImage(new Image(angleTileRightUp),   getX() + getWidth() - 30,    getY());//,                     30, 30, this);
+        graph.drawImage(new Image(angleTileRightDown), getX() + getWidth() - 30,    getY());// + getHeight() - 30,  30, 30, this);
+        graph.drawImage(new Image(angleTileLeftDown),  getX(),                      getY());// + getHeight() - 30,  30, 30, this);
 
-        graphics.drawImage(lineTileLeft,    getX(),                   getY() + 30,                  30,                 getHeight() - 60, this);
-        graphics.drawImage(lineTileRight,   getX() + getWidth() - 30, getY() + 30,                  30,                 getHeight() - 60, this);
-        graphics.drawImage(lineTileUp,      getX() + 30,              getY(),                       getWidth() - 60,    30,               this);
-        graphics.drawImage(lineTileDown,    getX() + 30,              getY() + getHeight() - 30,    getWidth() - 60,    30,               this);
+        graph.drawImage(new Image(lineTileLeft),    getX(),                   getY() + 30);//,                  30,                 getHeight() - 60, this);
+        graph.drawImage(new Image(lineTileRight),   getX() + getWidth() - 30, getY() + 30);//,                  30,                 getHeight() - 60, this);
+        graph.drawImage(new Image(lineTileUp),      getX() + 30,              getY());//,                       getWidth() - 60,    30,               this);
+        graph.drawImage(new Image(lineTileDown),    getX() + 30,              getY() + getHeight() - 30);//,    getWidth() - 60,    30,               this);
+    }
+
+    /**
+     * @return the player
+     */
+    public Player getPlayer()
+    {
+        return player;
+    }
+
+    /**
+     * @param player the player to set
+     */
+    public void setPlayer(Player player)
+    {
+        this.player = player;
     }
 
 }

@@ -1,6 +1,6 @@
 package org.catan.components;
 
-import java.awt.Color;
+import org.newdawn.slick.Color;
 import java.util.ArrayList;
 import java.util.List;
 import org.catan.components.raws.Raw;

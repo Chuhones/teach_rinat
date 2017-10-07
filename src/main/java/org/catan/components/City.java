@@ -1,7 +1,11 @@
 package org.catan.components;
 
-import java.awt.Image;
-import org.catan.ResourceLoader;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.opengl.InternalTextureLoader;
+import org.newdawn.slick.util.Log;
 
 /**
  *
@@ -10,15 +14,35 @@ import org.catan.ResourceLoader;
 public class City extends Settlement
 {
     private final String tileName = "building.png";
-    private Image tile = null;
     
     @Override
-    public Image getTile()
+    public Shape getMesh()
     {
-        if(tile == null)
+        if(mesh == null)
         {
-            tile = ResourceLoader.getTile(tileName);
+            mesh = new Rectangle(0, 0, 40, 40);
         }
-        return tile;
+        return mesh;
+    }
+
+    @Override
+    public Image getTexture()
+    {
+        try
+        {
+            if(texture == null)
+            {
+                texture = new Image(tileName, false);
+                return texture;
+            }
+        }
+        catch(Exception ex)
+        {
+            Log.error(ex.getMessage(), ex);
+            System.out.println("Errororororo");
+            return null;
+        }
+        
+        return texture;
     }
 }

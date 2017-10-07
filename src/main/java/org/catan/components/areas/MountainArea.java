@@ -1,9 +1,13 @@
 package org.catan.components.areas;
 
-import java.awt.Image;
-import org.catan.ResourceLoader;
+import java.io.IOException;
 import org.catan.components.raws.OreRaw;
 import org.catan.components.raws.Raw;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.opengl.InternalTextureLoader;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.util.Log;
 
 /**
  *
@@ -11,16 +15,22 @@ import org.catan.components.raws.Raw;
  */
 public class MountainArea extends Area
 {
-    private final String tileName = "mountain_area_cpy.png";
-    private Image tile = null;
+    private final String textureName = "mountain_area_cpy.png";
     
-    public Image getTile()
+    @Override
+    public Image getTexture()
     {
-        if(tile == null)
+        try
         {
-            tile = ResourceLoader.getTile(tileName);
+            texture = new Image(textureName, false);
+            texture.setFilter(Image.FILTER_NEAREST);
+            return texture;
         }
-        return tile;
+        catch(SlickException ex)
+        {
+            Log.error(ex.getMessage(), ex);
+            return null;
+        }
     }
     
     @Override

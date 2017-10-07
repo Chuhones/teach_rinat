@@ -1,10 +1,16 @@
 package org.catan.scene;
 
-import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
-import org.catan.ResourceLoader;
 import org.catan.components.Settlement;
+import org.catan.core.BaseComponent;
+import org.catan.core.Component;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.gui.GUIContext;
+import org.newdawn.slick.util.Log;
 
 /**
  *
@@ -19,16 +25,73 @@ public class CrossLine
     
     protected Settlement settlement = null;
 
-    private final String tileName = "crossline_cpy.png";
-    private Image tile = null;
-    
-    public Image getTile()
+    private final String defaultTextureName = "crossline_cpy.png";
+    protected Component graphComponent = null; 
+
+    public void initGraphics(GUIContext container, Component parentComponent) throws SlickException
     {
-        if(tile == null)
+        if(parentComponent == null)
         {
-            tile = ResourceLoader.getTile(tileName);
+            throw new SlickException("Cannot create crossline without parent");
         }
-        return tile;
+        if(graphComponent == null)
+        {
+            graphComponent = new BaseComponent(container);
+            graphComponent.setParent(parentComponent);
+            graphComponent.setMesh(resolveShape());
+            graphComponent.setImage(resolveImage());
+        }
+        
+        graphComponent.setLocation(parentComponent.getX()+xCoord, parentComponent.getY()+yCoord);
+    }
+    
+    public void render(GUIContext guic, org.newdawn.slick.Graphics g)
+            throws SlickException
+    {
+        graphComponent.render(guic, g);
+    }
+
+    protected Image resolveImage()
+    {
+        if(graphComponent == null)
+        {
+            return null;
+        }
+        
+        try
+        {
+            if(settlement == null)
+            {
+                return new Image(defaultTextureName, false);
+            }
+            else 
+            {
+                return settlement.getTexture();
+            }
+        }
+        catch(SlickException ex)
+        {
+            Log.error(ex.getMessage(), ex);
+            return null;
+        }
+    }
+    
+    protected Shape resolveShape()
+    {
+        if(graphComponent == null)
+        {
+            return null;
+        }
+
+        if(settlement == null)
+        {
+            return new Circle(0, 0, 4, 12);
+        }
+        else 
+        {
+            return settlement.getMesh();
+        }
+
     }
     
     public void addSegment(Segment newSegment)
@@ -127,9 +190,28 @@ public class CrossLine
     public void setSettlement(Settlement settlement)
     {
         this.settlement = settlement;
-        if(settlement != null)
+        if(graphComponent != null)
         {
-            this.tile = settlement.getTile();
+            graphComponent.setImage(resolveImage());
+            Shape tempMesh = resolveShape();
+            tempMesh.setLocation(graphComponent.getX(), graphComponent.getY());
+            graphComponent.setMesh(resolveShape());
         }
+    }
+
+    /**
+     * @return the graphComponent
+     */
+    public Component getGraphComponent()
+    {
+        return graphComponent;
+    }
+
+    /**
+     * @param graphComponent the graphComponent to set
+     */
+    public void setGraphComponent(Component graphComponent)
+    {
+        this.graphComponent = graphComponent;
     }
 }

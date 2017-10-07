@@ -9,55 +9,40 @@
 
 package org.catan;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.util.List;
-import javax.swing.JPanel;
 import org.catan.components.Player;
 import org.catan.components.raws.Raw;
+import org.catan.core.Component;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.gui.GUIContext;
 
 /**
  *
  * @author artyukov
  */
-public class PlayerPanelRaws extends JPanel
+public class PlayerPanelRaws extends Component
 {
     final PlayerPanel mainPanel;
 
     public static float RATIO = 1.5f;
 
-    public PlayerPanelRaws(PlayerPanel mainPanel)
+    public PlayerPanelRaws(PlayerPanel mainPanel, GUIContext container)
     {
+        super(container);
         this.mainPanel = mainPanel;
     }
-
+    
     public void init(int xCoord, int yCoord, int width, int height)
     {
-        setBackground(new Color(176, 120, 15));
-        setBounds(xCoord, yCoord, width, height);
-
-        System.out.println("Player RAW bounds: "+xCoord+"   "+yCoord+"   "+width+"   "+height);
+//        setBackground(new Color(176, 120, 15));
+//        setBounds(xCoord, yCoord, width, height);
+//
+//        System.out.println("Player RAW bounds: "+xCoord+"   "+yCoord+"   "+width+"   "+height);
     }
 
-
-    @Override
-    public void paint(Graphics g)
+    private void render(Graphics graph)
     {
-    }
-
-    public void manPaint(Graphics g)
-    {
-        //super.paint(g);
-        paintRaws((Graphics2D)g);
-
-        //g.dispose();
-    }
-
-    private void paintRaws(Graphics2D graph)
-    {
-        graph.setPaintMode();
         if(mainPanel.getPlayer() == null)
         {
             return;
@@ -84,11 +69,11 @@ public class PlayerPanelRaws extends JPanel
 
         int num = 0;
 
-        Rectangle bds = getBounds();
-        System.out.println("Player RAW bounds2: "+bds.x+"   "+bds.y+"   "+bds.width+"   "+bds.height);
+        //Rectangle bds = getBounds();
+        //System.out.println("Player RAW bounds2: "+bds.x+"   "+bds.y+"   "+bds.width+"   "+bds.height);
         for(Raw raw : raws)
         {
-            graph.drawImage(raw.getTile(), left + num * oneCardWidth, up, cardWidth, height, this);
+            graph.drawImage(new Image(raw.getTexture()), left + num * oneCardWidth, up);//, cardWidth, height, this);
             num++;
         }
 

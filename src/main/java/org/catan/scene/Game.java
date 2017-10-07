@@ -21,6 +21,14 @@ public class Game
     {
         gameName = "New Game "+ (new SimpleDateFormat("HH:mm:ss yyyy MMMM dd").format(new Date()));
     }
+    
+    public static Game newGame(AbstractMap map)
+    {
+        instance = new Game();
+        instance.setMap(map);
+        
+        return instance;
+    }
 
     public static Game getGame()
     {

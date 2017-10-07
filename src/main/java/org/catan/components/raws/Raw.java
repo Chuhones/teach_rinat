@@ -1,6 +1,6 @@
 package org.catan.components.raws;
 
-import java.awt.Image;
+import org.newdawn.slick.opengl.Texture;
 
 /**
  *
@@ -8,5 +8,5 @@ import java.awt.Image;
  */
 public abstract class Raw 
 {
-    public abstract Image getTile();
+    public abstract Texture getTexture();
 }

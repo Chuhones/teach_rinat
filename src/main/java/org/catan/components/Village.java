@@ -1,7 +1,11 @@
 package org.catan.components;
 
-import java.awt.Image;
-import org.catan.ResourceLoader;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.util.Log;
 
 /**
  *
@@ -10,15 +14,32 @@ import org.catan.ResourceLoader;
 public class Village extends Settlement
 {
     private final String tileName = "house.png";
-    private Image tile = null;
-    
+
     @Override
-    public Image getTile()
+    public Shape getMesh()
     {
-        if(tile == null)
+        if(mesh == null)
         {
-            tile = ResourceLoader.getTile(tileName);
+            mesh = new Rectangle(0, 0, 40, 40);
         }
-        return tile;
+        return mesh;
     }
+
+    @Override
+    public Image getTexture()
+    {
+        try
+        {
+            texture = new Image(tileName, false);
+            texture.setFilter(Image.FILTER_NEAREST);
+            return texture;
+        }
+        catch(SlickException ex)
+        {
+            Log.error(ex.getMessage(), ex);
+            System.out.println("Errororororo");
+            return null;
+        }
+    }
+    
 }

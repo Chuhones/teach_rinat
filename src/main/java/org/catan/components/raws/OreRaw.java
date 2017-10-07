@@ -1,7 +1,8 @@
 package org.catan.components.raws;
 
-import java.awt.Image;
-import org.catan.ResourceLoader;
+import java.io.IOException;
+import org.newdawn.slick.opengl.InternalTextureLoader;
+import org.newdawn.slick.opengl.Texture;
 
 /**
  *
@@ -10,14 +11,21 @@ import org.catan.ResourceLoader;
 public class OreRaw extends Raw
 {
     private final String tileName = "ore_raw.png";
-    private Image tile = null;
+    private Texture tile = null;
     
     @Override
-    public Image getTile()
+    public Texture getTexture()
     {
         if(tile == null)
         {
-            tile = ResourceLoader.getTile(tileName);
+            try
+            {
+                tile = InternalTextureLoader.get().getTexture(tileName, false, 0);
+            }
+            catch(IOException ioe)
+            {
+                System.out.println("Cannot resolve texture "+tileName);
+            }
         }
         return tile;
     }

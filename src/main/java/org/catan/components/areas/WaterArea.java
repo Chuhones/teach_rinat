@@ -1,7 +1,8 @@
 package org.catan.components.areas;
 
-import java.awt.Image;
-import org.catan.ResourceLoader;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.util.Log;
 
 /**
  *
@@ -9,17 +10,21 @@ import org.catan.ResourceLoader;
  */
 public class WaterArea extends Area
 {
-    private final String tileName = "water_area_cpy.png";
-    
-    private Image tile = null;
+    private final String textureName = "water_area_cpy.png";
     
     @Override
-    public Image getTile()
+    public Image getTexture()
     {
-        if(tile == null)
+        try
         {
-            tile = ResourceLoader.getTile(tileName);
+            texture = new Image(textureName, false);
+            texture.setFilter(Image.FILTER_NEAREST);
+            return texture;
         }
-        return tile;
+        catch(SlickException ex)
+        {
+            Log.error(ex.getMessage(), ex);
+            return null;
+        }
     }
 }

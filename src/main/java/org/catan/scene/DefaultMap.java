@@ -1,6 +1,6 @@
 package org.catan.scene;
 
-import java.awt.Color;
+import org.newdawn.slick.Color;
 import java.util.ArrayList;
 import org.catan.components.City;
 import org.catan.components.Player;
@@ -25,6 +25,7 @@ public class DefaultMap extends AbstractMap
     {
         Player player1 = new Player("FirstPlayer", Color.red);
         
+        
         for(int x=0; x < crosslines.length; x++)
         {
             for(int y=0; y < crosslines[x].length; y++)
@@ -34,35 +35,35 @@ public class DefaultMap extends AbstractMap
         }
         
         MapGenerator generator = new MapGenerator();
-                
-        Segment newSegment = new Segment("1", new WaterArea());     //1
-        getSegments()[1][0] = newSegment;
-        crosslines[2][0].addSegment(newSegment);
-        crosslines[3][0].addSegment(newSegment);
-        
-        newSegment = new Segment("2", new WaterArea());             //2
-        getSegments()[2][0] = newSegment;
-        crosslines[3][0].addSegment(newSegment);
-        crosslines[4][0].addSegment(newSegment);
-        crosslines[5][0].addSegment(newSegment);
-        
-        newSegment = new Segment("3", new WaterArea());             //3
-        getSegments()[3][0] = newSegment;
-        crosslines[5][0].addSegment(newSegment);
-        crosslines[6][0].addSegment(newSegment);
-        crosslines[7][0].addSegment(newSegment);
-        
-        newSegment = new Segment("4", new WaterArea());             //4
-        getSegments()[4][0] = newSegment;
-        crosslines[7][0].addSegment(newSegment);
-        crosslines[8][0].addSegment(newSegment);
-        
-        newSegment = new Segment("5", new WaterArea());             //5
-        getSegments()[1][1] = newSegment;
-        crosslines[2][0].addSegment(newSegment);
-        crosslines[2][1].addSegment(newSegment);
-        crosslines[1][1].addSegment(newSegment);
-        
+        Segment newSegment;
+//        Segment newSegment = new Segment("1", new WaterArea());     //1
+//        getSegments()[1][0] = newSegment;
+//        crosslines[2][0].addSegment(newSegment);
+//        crosslines[3][0].addSegment(newSegment);
+//        
+//        newSegment = new Segment("2", new WaterArea());             //2
+//        getSegments()[2][0] = newSegment;
+//        crosslines[3][0].addSegment(newSegment);
+//        crosslines[4][0].addSegment(newSegment);
+//        crosslines[5][0].addSegment(newSegment);
+//        
+//        newSegment = new Segment("3", new WaterArea());             //3
+//        getSegments()[3][0] = newSegment;
+//        crosslines[5][0].addSegment(newSegment);
+//        crosslines[6][0].addSegment(newSegment);
+//        crosslines[7][0].addSegment(newSegment);
+//        
+//        newSegment = new Segment("4", new WaterArea());             //4
+//        getSegments()[4][0] = newSegment;
+//        crosslines[7][0].addSegment(newSegment);
+//        crosslines[8][0].addSegment(newSegment);
+//        
+//        newSegment = new Segment("5", new WaterArea());             //5
+//        getSegments()[1][1] = newSegment;
+//        crosslines[2][0].addSegment(newSegment);
+//        crosslines[2][1].addSegment(newSegment);
+//        crosslines[1][1].addSegment(newSegment);
+//        
         newSegment = new Segment("6", generator.getNextArea());             //6
         getSegments()[2][1] = newSegment;
         crosslines[2][0].addSegment(newSegment);
@@ -89,19 +90,19 @@ public class DefaultMap extends AbstractMap
         crosslines[6][1].addSegment(newSegment);
         crosslines[7][1].addSegment(newSegment);
         crosslines[8][1].addSegment(newSegment);
-        
-        newSegment = new Segment("9", new WaterArea());             //9
-        getSegments()[5][1] = newSegment;
-        crosslines[8][0].addSegment(newSegment);
-        crosslines[8][1].addSegment(newSegment);
-        crosslines[9][1].addSegment(newSegment);
-        
-        newSegment = new Segment("10", new WaterArea());             //10
-        getSegments()[0][2] = newSegment;
-        crosslines[1][1].addSegment(newSegment);
-        crosslines[0][2].addSegment(newSegment);
-        crosslines[1][2].addSegment(newSegment);
-        
+//        
+//        newSegment = new Segment("9", new WaterArea());             //9
+//        getSegments()[5][1] = newSegment;
+//        crosslines[8][0].addSegment(newSegment);
+//        crosslines[8][1].addSegment(newSegment);
+//        crosslines[9][1].addSegment(newSegment);
+//        
+//        newSegment = new Segment("10", new WaterArea());             //10
+//        getSegments()[0][2] = newSegment;
+//        crosslines[1][1].addSegment(newSegment);
+//        crosslines[0][2].addSegment(newSegment);
+//        crosslines[1][2].addSegment(newSegment);
+//        
         newSegment = new Segment("11", generator.getNextArea());             //11
         getSegments()[1][2] = newSegment;
         crosslines[1][1].addSegment(newSegment);
@@ -138,16 +139,16 @@ public class DefaultMap extends AbstractMap
         crosslines[8][2].addSegment(newSegment);
         crosslines[9][2].addSegment(newSegment);
         
-        newSegment = new Segment("15", new WaterArea());             //15
-        getSegments()[5][2] = newSegment;
-        crosslines[9][1].addSegment(newSegment);
-        crosslines[9][2].addSegment(newSegment);
-        crosslines[10][2].addSegment(newSegment);
-        
-        newSegment = new Segment("16", new WaterArea());             //16
-        getSegments()[0][3] = newSegment;
-        crosslines[0][2].addSegment(newSegment);
-        crosslines[0][3].addSegment(newSegment);
+//        newSegment = new Segment("15", new WaterArea());             //15
+//        getSegments()[5][2] = newSegment;
+//        crosslines[9][1].addSegment(newSegment);
+//        crosslines[9][2].addSegment(newSegment);
+//        crosslines[10][2].addSegment(newSegment);
+//        
+//        newSegment = new Segment("16", new WaterArea());             //16
+//        getSegments()[0][3] = newSegment;
+//        crosslines[0][2].addSegment(newSegment);
+//        crosslines[0][3].addSegment(newSegment);
 
         newSegment = new Segment("17", generator.getNextArea());             //17
         getSegments()[1][3] = newSegment;
@@ -194,16 +195,16 @@ public class DefaultMap extends AbstractMap
         crosslines[9][3].addSegment(newSegment);
         crosslines[10][3].addSegment(newSegment);
         
-        newSegment = new Segment("22", new WaterArea());             //22
-        getSegments()[6][3] = newSegment;
-        crosslines[10][2].addSegment(newSegment);
-        crosslines[10][3].addSegment(newSegment);
-        
-        newSegment = new Segment("23", new WaterArea());             //23
-        getSegments()[0][4] = newSegment;
-        crosslines[0][3].addSegment(newSegment);
-        crosslines[1][3].addSegment(newSegment);
-        crosslines[1][4].addSegment(newSegment);
+//        newSegment = new Segment("22", new WaterArea());             //22
+//        getSegments()[6][3] = newSegment;
+//        crosslines[10][2].addSegment(newSegment);
+//        crosslines[10][3].addSegment(newSegment);
+//        
+//        newSegment = new Segment("23", new WaterArea());             //23
+//        getSegments()[0][4] = newSegment;
+//        crosslines[0][3].addSegment(newSegment);
+//        crosslines[1][3].addSegment(newSegment);
+//        crosslines[1][4].addSegment(newSegment);
         
         newSegment = new Segment("24", generator.getNextArea());             //24
         getSegments()[1][4] = newSegment;
@@ -241,17 +242,17 @@ public class DefaultMap extends AbstractMap
         crosslines[8][4].addSegment(newSegment);
         crosslines[9][4].addSegment(newSegment);
         
-        newSegment = new Segment("28", new WaterArea());             //28
-        getSegments()[5][4] = newSegment;
-        crosslines[9][3].addSegment(newSegment);
-        crosslines[10][3].addSegment(newSegment);
-        crosslines[9][4].addSegment(newSegment);
-        
-        newSegment = new Segment("29", new WaterArea());             //29
-        getSegments()[1][5] = newSegment;
-        crosslines[1][4].addSegment(newSegment);
-        crosslines[2][4].addSegment(newSegment);
-        crosslines[2][5].addSegment(newSegment);
+//        newSegment = new Segment("28", new WaterArea());             //28
+//        getSegments()[5][4] = newSegment;
+//        crosslines[9][3].addSegment(newSegment);
+//        crosslines[10][3].addSegment(newSegment);
+//        crosslines[9][4].addSegment(newSegment);
+//        
+//        newSegment = new Segment("29", new WaterArea());             //29
+//        getSegments()[1][5] = newSegment;
+//        crosslines[1][4].addSegment(newSegment);
+//        crosslines[2][4].addSegment(newSegment);
+//        crosslines[2][5].addSegment(newSegment);
         
         newSegment = new Segment("30", generator.getNextArea());             //30
         getSegments()[2][5] = newSegment;
@@ -280,33 +281,33 @@ public class DefaultMap extends AbstractMap
         crosslines[7][5].addSegment(newSegment);
         crosslines[8][5].addSegment(newSegment);
         
-        newSegment = new Segment("33", new WaterArea());             //33
-        getSegments()[5][5] = newSegment;
-        crosslines[8][4].addSegment(newSegment);
-        crosslines[9][4].addSegment(newSegment);
-        crosslines[8][5].addSegment(newSegment);
-        
-        newSegment = new Segment("34", new WaterArea());             //34
-        getSegments()[1][6] = newSegment;
-        crosslines[2][5].addSegment(newSegment);
-        crosslines[3][5].addSegment(newSegment);
-        
-        newSegment = new Segment("35", new WaterArea());             //35
-        getSegments()[2][6] = newSegment;
-        crosslines[3][5].addSegment(newSegment);
-        crosslines[4][5].addSegment(newSegment);
-        crosslines[5][5].addSegment(newSegment);
-        
-        newSegment = new Segment("36", new WaterArea());             //36
-        getSegments()[3][6] = newSegment;
-        crosslines[5][5].addSegment(newSegment);
-        crosslines[6][5].addSegment(newSegment);
-        crosslines[7][5].addSegment(newSegment);
-        
-        newSegment = new Segment("37", new WaterArea());             //37
-        getSegments()[4][6] = newSegment;
-        crosslines[7][5].addSegment(newSegment);
-        crosslines[8][5].addSegment(newSegment);
+//        newSegment = new Segment("33", new WaterArea());             //33
+//        getSegments()[5][5] = newSegment;
+//        crosslines[8][4].addSegment(newSegment);
+//        crosslines[9][4].addSegment(newSegment);
+//        crosslines[8][5].addSegment(newSegment);
+//        
+//        newSegment = new Segment("34", new WaterArea());             //34
+//        getSegments()[1][6] = newSegment;
+//        crosslines[2][5].addSegment(newSegment);
+//        crosslines[3][5].addSegment(newSegment);
+//        
+//        newSegment = new Segment("35", new WaterArea());             //35
+//        getSegments()[2][6] = newSegment;
+//        crosslines[3][5].addSegment(newSegment);
+//        crosslines[4][5].addSegment(newSegment);
+//        crosslines[5][5].addSegment(newSegment);
+//        
+//        newSegment = new Segment("36", new WaterArea());             //36
+//        getSegments()[3][6] = newSegment;
+//        crosslines[5][5].addSegment(newSegment);
+//        crosslines[6][5].addSegment(newSegment);
+//        crosslines[7][5].addSegment(newSegment);
+//        
+//        newSegment = new Segment("37", new WaterArea());             //37
+//        getSegments()[4][6] = newSegment;
+//        crosslines[7][5].addSegment(newSegment);
+//        crosslines[8][5].addSegment(newSegment);
         
         Line newLine;
         for(int x=0; x<crosslines.length; x++)

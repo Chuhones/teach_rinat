@@ -1,47 +1,105 @@
 package org.catan;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Stroke;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
 import java.util.List;
-import javax.swing.JPanel;
-import org.catan.components.areas.Area;
+import org.catan.core.Component;
 import org.catan.scene.AbstractMap;
 import org.catan.scene.CrossLine;
 import org.catan.scene.Game;
 import org.catan.scene.Line;
 import org.catan.scene.Segment;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.gui.GUIContext;
+import org.newdawn.slick.util.Log;
 
 /**
  *
  * @author Artyukov
  */
-public class MapPanel extends JPanel
+public class MapPanel extends Component
 {
-    @Override
-    public void paint(Graphics g)
+    //Image testImg = new Image("house.png",false);
+    public MapPanel(GUIContext container, int X, int Y, int width, int height)
     {
-        super.paint(g); 
-        addGameToFrame(g);
+        this(container);
+        setLocation(X, Y);
+        this.width = width;
+        this.height = height;
+        init(container);
     }
-        
-    public void addGameToFrame(Graphics graph)
+
+    private MapPanel(GUIContext container)
+    {
+        super(container);
+        background = Color.blue;
+    }
+    
+    private void init(GUIContext container) 
     {
         Game game = Game.getGame();
         AbstractMap map = game.getMap();
-        Graphics2D graphics = (Graphics2D)graph;
-        graphics.setPaintMode();
+        Segment[][] segments = map.getSegments();
+        
+        try
+        {
+            for(CrossLine[] crossVector : map.getCrosslines())
+            {
+                for(CrossLine cross : crossVector)
+                {
+                    if(cross != null)
+                    {
+                        cross.initGraphics(container, this);
+                    }
+                }
+            }
+            
+            for (Segment[] segmentRow : segments)
+            {
+                for (Segment segment : segmentRow)
+                {
+                    if(segment != null && segment.getArea() != null)
+                    {
+                        segment.initGraphics(container, this);
+                    }
+                }
+            }
+        }
+        catch(SlickException sle)
+        {
+            Log.debug(sle.getMessage());
+        }
+    }
+    
+
+    @Override
+    public void render(GUIContext guic, Graphics g)
+            throws SlickException
+    {
+        Rectangle oldClip = g.getClip();
+        
+        Color clr = g.getColor();
+        
+        g.setWorldClip(x,y,width, height);
+        g.setBackground(getBackground());
+        renderGame(guic, g);
+        
+        
+        
+        g.setColor(clr);
+        g.clearWorldClip();
+        g.setClip(oldClip);
+    }
+    
+    public void renderGame(GUIContext guic, Graphics graph) throws SlickException
+    {
+        Game game = Game.getGame();
+        AbstractMap map = game.getMap();
 
         CrossLine[][] crosslines = map.getCrosslines();
         Segment[][] segments = map.getSegments();
         List<Line> lines = map.getLines();
-        
-        Image tileCrossline;
-        Area area;
-        Image tileArea;
         
         for (Segment[] segmentRow : segments)
         {
@@ -51,19 +109,16 @@ public class MapPanel extends JPanel
                 {
                     continue;
                 }
-                area = segment.getArea();
                 
-                tileArea = area.getTile();
-                drawImage(graphics, tileArea, segment.getXCoord(), segment.getYCoord(), 100, 115);
+                segment.render(guic, graph);
             }
         }
         
         for (Line line : lines)
         {
-            drawRoad(graphics, line);
+            drawRoad(graph, line);
         }
         
-        int xyDiff = 4;
         for (CrossLine[] crossline : crosslines)
         {
             for (CrossLine cross : crossline)
@@ -72,27 +127,14 @@ public class MapPanel extends JPanel
                 {
                     continue;
                 }
-                
-                tileCrossline = cross.getTile();
-                
-                if(cross.getSettlement() == null)
-                {
-                    xyDiff = 8;
-                }
-                else
-                {
-                    xyDiff = 30;
-                }
-                drawImage(graphics, tileCrossline, 
-                        cross.getXCoord()-(xyDiff/2), cross.getYCoord()-(xyDiff/2), 
-                        xyDiff, xyDiff);
+                cross.render(guic, graph);
             }
         }
         
-        graphics.dispose();
+        graph.flush();
     }
     
-    private void drawRoad(Graphics2D graphics, Line line)
+    private void drawRoad(Graphics graphics, Line line)
     {
         Color defaultColor = new Color(250, 220, 128);
         
@@ -113,33 +155,10 @@ public class MapPanel extends JPanel
         CrossLine from = line.getCrossLines().get(0);
         CrossLine to = line.getCrossLines().get(1);
 
-        graphics.setStroke(new BasicStroke(6));
-        graphics.drawLine(from.getXCoord(), from.getYCoord(), 
-                           to.getXCoord(),   to.getYCoord());
+        graphics.setLineWidth(6);
+        graphics.drawLine(from.getXCoord()+getX(), from.getYCoord()+getY(), 
+                           to.getXCoord()+getX(),   to.getYCoord()+getY());
     }
     
-    private void drawImage(
-            Graphics2D graph, Image image, int x, int y, Integer width, Integer height)
-    {
-        if(image == null)
-        {
-            
-            graph.drawString("N/A", x, y);
-        }
-        else
-        {
-            if(width == null || height == null)
-            {
-                width = image.getWidth(this);
-                height = image.getHeight(this);
-            }
-            
-            graph.drawImage(image, x, y, width, height, this);
-        }
-    }
-    
-    private void drawImage(Graphics2D graph, Image image, int x, int y)
-    {
-        drawImage(graph, image, x, y, null, null);
-    }
+
 }

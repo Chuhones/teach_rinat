@@ -1,7 +1,8 @@
 package org.catan.components.areas;
 
-import java.awt.Image;
-import org.catan.ResourceLoader;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.util.Log;
 
 /**
  *
@@ -9,15 +10,21 @@ import org.catan.ResourceLoader;
  */
 public class DesertArea extends Area
 {
-    private final String tileName = "desert_area_cpy.png";
-    private Image tile = null;
+    private final String textureName = "desert_area_cpy.png";
     
-    public Image getTile()
+    @Override
+    public Image getTexture()
     {
-        if(tile == null)
+        try
         {
-            tile = ResourceLoader.getTile(tileName);
+            texture = new Image(textureName, false);
+            texture.setFilter(Image.FILTER_NEAREST);
+            return texture;
         }
-        return tile;
+        catch(SlickException ex)
+        {
+            Log.error(ex.getMessage(), ex);
+            return null;
+        }
     }
 }

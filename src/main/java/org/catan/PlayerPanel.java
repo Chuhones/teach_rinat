@@ -1,40 +1,67 @@
 package org.catan;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import javax.swing.JPanel;
+import java.awt.Font;
 import org.catan.components.Player;
+import org.catan.core.Component;
+import org.catan.core.TextInRectangleRenderer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.gui.GUIContext;
+import org.newdawn.slick.svg.Diagram;
+import org.newdawn.slick.svg.Figure;
+import org.newdawn.slick.svg.InkscapeLoader;
+import org.newdawn.slick.svg.SimpleDiagramRenderer;
+import org.newdawn.slick.util.Log;
 
 /**
  *
  * @author Artyukov
  */
-public class PlayerPanel extends JPanel
+public class PlayerPanel extends Component
 {
-    PlayerPanelBackground background;
-    PlayerPanelRaws raws;
+    public static final String playerPanelSvgName = "player_panel.svg";
+    protected Diagram playerShape;
+    
+    Shape playerBackground = null;
+    Shape playerName = null;
+    Shape playerPhoto = null;
+    Shape playerRaws = null;
+    Shape playerScore = null;
+    
+    protected SimpleDiagramRenderer svgRender = null;
+    protected TextInRectangleRenderer textRenderer = null;
+    
     private Player player = null;
 
-    public PlayerPanel()
+    
+    public PlayerPanel(GUIContext container)
     {
-        //background = new PlayerPanelBackground();
-        raws = new PlayerPanelRaws(this);
+        super(container);
+        init(container);
     }
-
-    @Override
-    public void setVisible(boolean aFlag)
+    
+    public void init(GUIContext container)
     {
-        System.out.println("Player Panel bounds: "+getX()+"   "+getY()+"   "+getWidth()+"   "+getHeight());
-        //add(background,0);
-        add(raws,0);
-
-        super.setVisible(aFlag);
-
-        //background.setVisible(true);
-        raws.setVisible(true);
-
-
+        try
+        {
+            playerShape = InkscapeLoader.load(playerPanelSvgName);
+            textRenderer = new TextInRectangleRenderer("Times New Roman", Font.BOLD, 10);
+            
+            Figure tempFigure = playerShape.getFigureByID("player_name");
+            playerName = tempFigure.getShape();
+            
+            tempFigure = playerShape.getFigureByID("player_background");
+            tempFigure.getData().addAttribute("fill", "#ac780f");
+            playerBackground = tempFigure.getShape();
+            
+            
+        }
+        catch(SlickException sle)
+        {
+            Log.debug("Errrrrrororororo SVG");
+        }
     }
 
     /**
@@ -59,36 +86,20 @@ public class PlayerPanel extends JPanel
 
     protected void fillPanels()
     {
-        Rectangle bound = getBounds();
-//        background.init((int)bound.getMinX(),
-//                        (int)bound.getMinY(),
-//                        (int)bound.getWidth(),
-//                        (int)bound.getHeight());
-
-        raws.init((int)bound.getMinX()+30,
-                  (int)(bound.getMinY() + bound.getHeight()/2 - 60),
-                  (int)bound.getWidth()-60,
-                  (int)bound.getHeight()/2);
-
+        
     }
 
     @Override
-    public void paint(Graphics g)
+    public void render(GUIContext guic, Graphics grphcs) throws SlickException
     {
-        super.paint(g);
-        paintPlayerPanel(g);
-
-        g.dispose();
+        if(player != null && playerShape != null)
+        {
+            grphcs.translate(x, y);
+            grphcs.scale(2, 2);
+            SimpleDiagramRenderer.render(grphcs,playerShape);
+            textRenderer.render(guic, grphcs, player.getName(), playerName, player.getColor());
+            grphcs.scale(1/2, 1/2);
+        }
     }
-
-    public void paintPlayerPanel(Graphics g)
-    {
-        Graphics2D graphics = (Graphics2D)g;
-        graphics.setPaintMode();
-
-        //background.manPaint(graphics);
-        raws.manPaint(graphics);
-    }
-
 
 }
